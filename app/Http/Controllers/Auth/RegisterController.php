@@ -47,13 +47,52 @@ class RegisterController extends Controller
      * @return \Illuminate\Contracts\Validation\Validator
      */
     protected function validator(array $data)
-    {
-        return Validator::make($data, [
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
-        ]);
-    }
+{
+    return Validator::make($data, [
+        'name' => [
+            'required',
+            'string',
+            'min:3',
+            'max:255',
+            'regex:/^[a-zA-Z\s]+$/',
+            'unique:users,name' // validasi nama unik
+        ],
+        'email' => [
+            'required',
+            'string',
+            'email',
+            'max:255',
+            'unique:users,email' // validasi email unik
+        ],
+        'password' => [
+            'required',
+            'string',
+            'min:8',
+            'max:100',
+            'confirmed'
+        ],
+    ], [
+        // ✅ Pesan error kustom
+        'name.required' => 'Nama wajib diisi.',
+        'name.string' => 'Nama harus berupa teks.',
+        'name.min' => 'Nama minimal harus terdiri dari 3 karakter.',
+        'name.max' => 'Nama tidak boleh lebih dari 255 karakter.',
+        'name.regex' => 'Nama hanya boleh mengandung huruf dan spasi.',
+        'name.unique' => 'Nama ini sudah terdaftar.',
+
+        'email.required' => 'Email wajib diisi.',
+        'email.string' => 'Email harus berupa teks.',
+        'email.email' => 'Format email tidak valid.',
+        'email.max' => 'Email tidak boleh lebih dari 255 karakter.',
+        'email.unique' => 'Email ini sudah terdaftar.',
+
+        'password.required' => 'Password wajib diisi.',
+        'password.string' => 'Password harus berupa teks.',
+        'password.min' => 'Password minimal terdiri dari 8 karakter.',
+        'password.max' => 'Password maksimal 100 karakter.',
+        'password.confirmed' => 'Konfirmasi password tidak cocok.'
+    ]);
+}
 
     /**
      * Create a new user instance after a valid registration.
