@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\Role;
 use App\Models\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
@@ -57,6 +58,7 @@ class RegisterController extends Controller
             'regex:/^[a-zA-Z\s]+$/',
             'unique:users,name' // validasi nama unik
         ],
+        'role_id' =>['required', 'string'],
         'email' => [
             'required',
             'string',
@@ -79,6 +81,9 @@ class RegisterController extends Controller
         'name.max' => 'Nama tidak boleh lebih dari 255 karakter.',
         'name.regex' => 'Nama hanya boleh mengandung huruf dan spasi.',
         'name.unique' => 'Nama ini sudah terdaftar.',
+
+        'role.required' => 'Role wajib diisi.',
+        'role.string' => 'Role harus berupa teks.',
 
         'email.required' => 'Email wajib diisi.',
         'email.string' => 'Email harus berupa teks.',
@@ -104,6 +109,7 @@ class RegisterController extends Controller
     {
         return User::create([
             'name' => $data['name'],
+            'role_id' => $data['role_id'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
         ]);

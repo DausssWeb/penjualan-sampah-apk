@@ -39,6 +39,16 @@
           @enderror
         </div>
 
+        <!-- role -->
+        <div class="mb-3">
+          <div class="input-group">
+                <select name="role_id" id="role_id" class="form-control">
+                    <option value="">Pilih Role</option>
+                    <option value="2">Masyarakat</option>
+                </select>
+            </div>
+        </div>
+
         <!-- Email -->
         <div class="mb-3">
           <div class="input-group">
