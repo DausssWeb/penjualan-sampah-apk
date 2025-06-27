@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Registration Page</title>
 
+  <link rel="icon" href="{{ asset('template/dist') }}/assets/images/favicon.svg" type="image/x-icon">
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
   <!-- Font Awesome -->
@@ -42,10 +43,13 @@
         <!-- role -->
         <div class="mb-3">
           <div class="input-group">
-                <select name="role_id" id="role_id" class="form-control">
+                <select name="role_id" id="role_id" class="form-control" @error('role_id') is-invalid @enderror" value="{{ old('role_id') }}" required>
                     <option value="">Pilih Role</option>
                     <option value="2">Masyarakat</option>
                 </select>
+                <div class="input-group-append">
+                  <div class="input-group-text"><span class="fas fa-users"></span></div>
+                </div>
             </div>
         </div>
 

@@ -14,54 +14,53 @@
   <meta name="author" content="CodedThemes">
 
   <!-- [Favicon] icon -->
-  <link rel="icon" href="{{ asset('template/dist') }}/assets/images/favicon.svg" type="image/x-icon"> <!-- [Google Font] Family -->
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@300;400;500;600;700&display=swap" id="main-font-link">
-<!-- [Tabler Icons] https://tablericons.com -->
-<link rel="stylesheet" href="{{ asset('template/dist') }}/assets/fonts/tabler-icons.min.css" >
-<!-- [Feather Icons] https://feathericons.com -->
-<link rel="stylesheet" href="{{ asset('template/dist') }}/assets/fonts/feather.css" >
-<!-- [Font Awesome Icons] https://fontawesome.com/icons -->
-<link rel="stylesheet" href="{{ asset('template/dist') }}/assets/fonts/fontawesome.css" >
-<!-- [Material Icons] https://fonts.google.com/icons -->
-<link rel="stylesheet" href="{{ asset('template/dist') }}/assets/fonts/material.css" >
-<!-- [Template CSS Files] -->
-<link rel="stylesheet" href="{{ asset('template/dist') }}/assets/css/style.css" id="main-style-link" >
-<link rel="stylesheet" href="{{ asset('template/dist') }}/assets/css/style-preset.css" >
-<link rel="stylesheet" href="https://cdn.datatables.net/2.2.2/css/dataTables.dataTables.min.css">
-@vite(['resources/js/app.js'])
+  <link rel="icon" href="{{ asset('template/dist') }}/assets/images/favicon.svg" type="image/x-icon"> 
+  <!-- [Google Font] Family -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@300;400;500;600;700&display=swap" id="main-font-link">
+  <!-- [Tabler Icons] https://tablericons.com -->
+  <link rel="stylesheet" href="{{ asset('template/dist') }}/assets/fonts/tabler-icons.min.css" >
+  <!-- [Feather Icons] https://feathericons.com -->
+  <link rel="stylesheet" href="{{ asset('template/dist') }}/assets/fonts/feather.css" >
+  <!-- [Font Awesome Icons] https://fontawesome.com/icons -->
+  <link rel="stylesheet" href="{{ asset('template/dist') }}/assets/fonts/fontawesome.css" >
+  <!-- [Material Icons] https://fonts.google.com/icons -->
+  <link rel="stylesheet" href="{{ asset('template/dist') }}/assets/fonts/material.css" >
+  <!-- [Template CSS Files] -->
+  <link rel="stylesheet" href="{{ asset('template/dist') }}/assets/css/style.css" id="main-style-link" >
+  <link rel="stylesheet" href="{{ asset('template/dist') }}/assets/css/style-preset.css" >
+  <link rel="stylesheet" href="https://cdn.datatables.net/2.2.2/css/dataTables.dataTables.min.css">
+  @vite(['resources/js/app.js'])
 
 
-<style>
-  .navbar-green {
-    background-color: #4ade80 !important; /* green-400 */
-    color: white;
-  }
+  <style>
+    .navbar-green {
+      background-color: #4ade80 !important; /* green-400 */
+      color: white;
+    }
 
-  .navbar-green .pc-head-link,
-  .navbar-green .ti,
-  .navbar-green span,
-  .navbar-green i {
-    color: white !important;
-  }
+    .navbar-green .pc-head-link,
+    .navbar-green .ti,
+    .navbar-green span,
+    .navbar-green i {
+      color: white !important;
+    }
 
-  .sidebar-green {
-    background-color: #4ade80 !important; /* green-400 */
-    color: white;
-  }
+    .sidebar-green {
+      background-color: #4ade80 !important; /* green-400 */
+      color: white;
+    }
 
-  .sidebar-green .pc-link,
-  .sidebar-green .pc-micon,
-  .sidebar-green .pc-mtext {
-    color: white !important;
-  }
+    .sidebar-green .pc-link,
+    .sidebar-green .pc-micon,
+    .sidebar-green .pc-mtext {
+      color: white !important;
+    }
 
-  .sidebar-green .pc-link:hover {
-    background-color: rgba(255, 255, 255, 0.1);
-    border-radius: 5px;
-  }
-</style>
-
-
+    .sidebar-green .pc-link:hover {
+      background-color: rgba(255, 255, 255, 0.1);
+      border-radius: 5px;
+    }
+  </style>
 
 </head>
 <!-- [Head] end -->
