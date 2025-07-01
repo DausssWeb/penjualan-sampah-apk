@@ -98,6 +98,18 @@
             <span class="pc-mtext">Data Pengguna</span>
           </a>
         </li>
+        <li class="pc-item">
+          <a href="{{ route('transaksi.index') }}" class="pc-link">
+            <span class="pc-micon"><i class="ti ti-device-analytics"></i></span>
+            <span class="pc-mtext">Data Transaksi</span>
+          </a>
+        </li>
+        <li class="pc-item">
+          <a href="{{ route('harga.index') }}" class="pc-link">
+            <span class="pc-micon"><i class="ti ti-report-money"></i></span>
+            <span class="pc-mtext">Harga Sampah</span>
+          </a>
+        </li>
         @endif
       </ul>
     </div>
@@ -322,7 +334,7 @@
   <!-- [ Main Content ] start -->
   <div class="pc-container">
     <div class="pc-content">
-      <!-- [ breadcrumb ] start -->
+      {{-- <!-- [ breadcrumb ] start -->
       <div class="page-header">
         <div class="page-block">
           <div class="row align-items-center">
@@ -339,7 +351,7 @@
           </div>
         </div>
       </div>
-      <!-- [ breadcrumb ] end -->
+      <!-- [ breadcrumb ] end --> --}}
        <!-- [ Typography ] start -->
         <div class="col-sm-12">
           <div class="card">

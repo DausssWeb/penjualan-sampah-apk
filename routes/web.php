@@ -15,3 +15,9 @@ Route::get('/home', function () {
 })->name('home')->middleware('auth');
 Route::resource('users', UserController::class)->middleware('isAdmin');
 Route::post('user-update-role', [UserController::class, 'updateRole'])->name('users.update-role');
+Route::get('/harga', function(){
+    return view('harga.index');
+})->name('harga.index')->middleware('auth');
+Route::get('/transaksi', function(){
+    return view('transaksi.index');
+})->name('transaksi.index')->middleware('auth');
