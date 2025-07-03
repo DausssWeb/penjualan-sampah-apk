@@ -32,4 +32,14 @@ class UserController extends Controller
         Alert::success('Berhasil', 'Role berhasil diubah');
         return redirect()->route('users.index');
     }
+    public function destroy($id)
+    {
+        $user = User::findOrFail($id);
+        $user->delete();
+
+        Alert::success('Berhasil', 'Data pengguna berhasil dihapus');
+        return redirect()->route('users.index');
+    }
+
 }
+
