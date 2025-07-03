@@ -44,7 +44,7 @@
         <div class="mb-3">
           <div class="input-group">
                 <select name="role_id" id="role_id" class="form-control" @error('role_id') is-invalid @enderror" value="{{ old('role_id') }}" required>
-                    <option value="">Pilih Role</option>
+                    <option value="">Pilih Pengguna</option>
                     <option value="2">Masyarakat</option>
                 </select>
                 <div class="input-group-append">

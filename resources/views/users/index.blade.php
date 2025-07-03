@@ -22,7 +22,7 @@
                         <td>{{ $user->name }}</td>
                         <td>{{ $user->email }}</td>
                         <td>{{ $user->role?->role_name }}</td>
-                        <td><button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#roleModal{{ $user->id }}">
+                        <td><button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#roleModal{{ $user->id }}">
                                 Ganti Role
                             </button>
                             <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal{{ $user->id }}">
@@ -39,7 +39,7 @@
 <div class="modal fade" id="roleModal{{ $user->id }}" tabindex="-1" aria-labelledby="roleModalLabel{{ $user->id }}" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
-      <div class="modal-header">
+      <div class="modal-header bg-primary">
         <h5 class="modal-title" id="roleModalLabel{{ $user->id }}">Ganti Role</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
@@ -70,7 +70,7 @@
 <div class="modal fade" id="deleteModal{{ $user->id }}" tabindex="-1" aria-labelledby="deleteModalLabel{{ $user->id }}" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
-      <div class="modal-header bg-danger text-white">
+      <div class="modal-header bg-danger">
         <h5 class="modal-title" id="deleteModalLabel{{ $user->id }}">Hapus Data Pengguna</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
@@ -81,7 +81,6 @@
             @method('DELETE')
             <div class="d-grid">
                 <button type="submit" class="btn btn-danger">Hapus</button>
-                <button type="button" class="btn btn-secondary mt-2" data-bs-dismiss="modal">Batal</button>
             </div>
         </form>
       </div>      

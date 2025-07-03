@@ -4,7 +4,7 @@
 <!-- [Head] start -->
 
 <head>
-  <title>Penjualan Sampah</title>
+  <title>Penjualan Sampah Digital</title>
   <!-- [Meta] -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
@@ -282,7 +282,7 @@
             </div>
             <div class="flex-grow-1 ms-3">
               <h6 class="mb-1">{{ auth()->user()->name }}</h6>
-              <span>UI/UX Designer</span>
+              <span>{{ auth()->user()->role?->role_name }}</span>
             </div>
           </div>
         </div>
