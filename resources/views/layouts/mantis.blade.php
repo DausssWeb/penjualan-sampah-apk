@@ -85,13 +85,14 @@
     <hr class="mt-0 border-width-1 border-width-1">
     <div class="navbar-content">
       <ul class="pc-navbar">
+        {{-- Admin sidebar --}}
+        @if(Auth::user()->role_id == '1')
         <li class="pc-item">
           <a href="{{ route('home') }}" class="pc-link">
             <span class="pc-micon"><i class="ti ti-dashboard"></i></span>
             <span class="pc-mtext">Dashboard</span>
           </a>
         </li>
-        @if(Auth::user()->role_id == '1')
         <li class="pc-item">
           <a href="{{ route('users.index') }}" class="pc-link">
             <span class="pc-micon"><i class="ti ti-user"></i></span>
@@ -108,6 +109,31 @@
           <a href="{{ route('harga.index') }}" class="pc-link">
             <span class="pc-micon"><i class="ti ti-report-money"></i></span>
             <span class="pc-mtext">Harga Sampah</span>
+          </a>
+        </li>
+        @else
+        <li class="pc-item">
+          <a href="{{ route('home') }}" class="pc-link">
+            <span class="pc-micon"><i class="ti ti-dashboard"></i></span>
+            <span class="pc-mtext">Dashboard</span>
+          </a>
+        </li>
+        <li class="pc-item">
+          <a href="#" class="pc-link">
+            <span class="pc-micon"><i class="ti ti-building-store"></i></span>
+            <span class="pc-mtext">Jual Sampah</span>
+          </a>
+        </li>
+        <li class="pc-item">
+          <a href="#" class="pc-link">
+            <span class="pc-micon"><i class="ti ti-activity"></i></span>
+            <span class="pc-mtext">Aktifitas</span>
+          </a>
+        </li>
+        <li class="pc-item">
+          <a href="#" class="pc-link">
+            <span class="pc-micon"><i class="ti ti-user"></i></span>
+            <span class="pc-mtext">Profil</span>
           </a>
         </li>
         @endif
@@ -242,6 +268,7 @@
         </div>
       </div>
     </li>
+    {{-- Profile --}}
     <li class="dropdown pc-h-item header-user-profile">
       <a class="pc-head-link dropdown-toggle arrow-none me-0"data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="false"data-bs-auto-close="outside"aria-expanded="false">
         <img src="{{ asset('template/dist') }}/assets/images/user/avatar-2.jpg" alt="user-image" class="user-avtar">
@@ -257,19 +284,19 @@
               <h6 class="mb-1">{{ auth()->user()->name }}</h6>
               <span>UI/UX Designer</span>
             </div>
-            <a href="#!" class="pc-head-link bg-transparent"><i class="ti ti-power text-danger"></i></a>
           </div>
         </div>
-        <ul class="nav drp-tabs nav-fill nav-tabs" id="mydrpTab" role="tablist">
-          <li class="nav-item" role="presentation">
-            <button class="nav-link active" id="drp-t1" data-bs-toggle="tab" data-bs-target="#drp-tab-1" type="button" role="tab" aria-controls="drp-tab-1"aria-selected="true"><i class="ti ti-user"></i> Profile</button
-            >
-          </li>
-          <li class="nav-item" role="presentation">
-            <button class="nav-link" id="drp-t2" data-bs-toggle="tab" data-bs-target="#drp-tab-2" type="button"role="tab"aria-controls="drp-tab-2"aria-selected="false"><i class="ti ti-settings"></i> Setting</button>
-          </li>
-        </ul>
         <div class="tab-content" id="mysrpTabContent">
+          <div class="tab-pane fade show active" id="drp-tab-1" role="tabpanel" aria-labelledby="drp-t1" tabindex="0">
+            <form action="{{ route('logout') }}" method="POST" class="mt-2">
+                @csrf
+                <button type="submit" class="btn btn-danger w-100">
+                    <i class="ti ti-power"></i><span>Logout</span>
+                </button>
+            </form>
+          </div>   
+        </div>
+        {{-- <div class="tab-content" id="mysrpTabContent">
           <div class="tab-pane fade show active" id="drp-tab-1" role="tabpanel" aria-labelledby="drp-t1" tabindex="0">
             <a href="#!" class="dropdown-item">
               <i class="ti ti-edit-circle"></i>
@@ -278,14 +305,6 @@
             <a href="#!" class="dropdown-item">
               <i class="ti ti-user"></i>
               <span>View Profile</span>
-            </a>
-            <a href="#!" class="dropdown-item">
-              <i class="ti ti-clipboard-list"></i>
-              <span>Social Profile</span>
-            </a>
-            <a href="#!" class="dropdown-item">
-              <i class="ti ti-wallet"></i>
-              <span>Billing</span>
             </a>
             <a href="#!" class="dropdown-item">
               <i class="ti ti-power"></i>
@@ -297,29 +316,7 @@
               </form>
             </a>
           </div>
-          <div class="tab-pane fade" id="drp-tab-2" role="tabpanel" aria-labelledby="drp-t2" tabindex="0">
-            <a href="#!" class="dropdown-item">
-              <i class="ti ti-help"></i>
-              <span>Support</span>
-            </a>
-            <a href="#!" class="dropdown-item">
-              <i class="ti ti-user"></i>
-              <span>Account Settings</span>
-            </a>
-            <a href="#!" class="dropdown-item">
-              <i class="ti ti-lock"></i>
-              <span>Privacy Center</span>
-            </a>
-            <a href="#!" class="dropdown-item">
-              <i class="ti ti-messages"></i>
-              <span>Feedback</span>
-            </a>
-            <a href="#!" class="dropdown-item">
-              <i class="ti ti-list"></i>
-              <span>History</span>
-            </a>
-          </div>
-        </div>
+        </div> --}}
       </div>
     </li>
   </ul>
