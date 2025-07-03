@@ -74,8 +74,8 @@
   </div>
 </div>
 <!-- [ Pre-loader ] End -->
- <!-- [ Sidebar Menu ] start -->
-<nav class="pc-sidebar navbar-green">
+<!-- [ Sidebar Menu ] start -->
+<nav class="pc-sidebar navbar-green pc-sidebar-collapse">
   <div class="navbar-wrapper">
     <div class="m-header ">
       <a href="{{ route('home') }}" class="b-brand text-primary">
@@ -131,7 +131,7 @@
           </a>
         </li>
         <li class="pc-item">
-          <a href="#" class="pc-link">
+          <a href="{{ route('profile.index') }}" class="pc-link">
             <span class="pc-micon"><i class="ti ti-user"></i></span>
             <span class="pc-mtext">Profil</span>
           </a>

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
@@ -13,6 +14,8 @@ Auth::routes();
 Route::get('/home', function () {
     return view('home');
 })->name('home')->middleware('auth');
+
+// Admin
 Route::resource('users', UserController::class)->middleware('isAdmin');
 Route::post('user-update-role', [UserController::class, 'updateRole'])->name('users.update-role');
 Route::get('/harga', function(){
@@ -21,3 +24,6 @@ Route::get('/harga', function(){
 Route::get('/transaksi', function(){
     return view('transaksi.index');
 })->name('transaksi.index')->middleware('auth');
+
+// Masyrakat
+Route::resource('profile', ProfileController::class);
