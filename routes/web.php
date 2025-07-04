@@ -26,4 +26,4 @@ Route::get('/transaksi', function(){
 })->name('transaksi.index')->middleware('auth');
 
 // Masyrakat
-Route::resource('profile', ProfileController::class);
+Route::resource('profile', ProfileController::class)->middleware('isMasyarakat');
