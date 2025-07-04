@@ -54,4 +54,8 @@ class User extends Authenticatable
         return $this->hasOne(Profile::class);
     }
 
+    public function transaksi(){
+        return $this->hasMany(Transaksi::class);
+    }
+
 }
