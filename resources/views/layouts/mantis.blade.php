@@ -287,6 +287,12 @@
           </div>
         </div>
         <div class="tab-content" id="mysrpTabContent">
+          @if (Auth::user()->role_id == '1')
+            <a href="{{ route('profile.index') }}" class="dropdown-item">
+              <i class="ti ti-user"></i>
+              <span>View Profile</span>
+            </a>
+          @endif
           <div class="tab-pane fade show active" id="drp-tab-1" role="tabpanel" aria-labelledby="drp-t1" tabindex="0">
             <form action="{{ route('logout') }}" method="POST" class="mt-2">
                 @csrf
