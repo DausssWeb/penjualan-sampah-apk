@@ -106,7 +106,7 @@
           </a>
         </li>
         <li class="pc-item">
-          <a href="{{ route('harga.index') }}" class="pc-link">
+          <a href="{{ route('harga') }}" class="pc-link">
             <span class="pc-micon"><i class="ti ti-report-money"></i></span>
             <span class="pc-mtext">Harga Sampah</span>
           </a>
@@ -119,13 +119,13 @@
           </a>
         </li>
         <li class="pc-item">
-          <a href="#" class="pc-link">
+          <a href="{{ route('transaksi.create') }}" class="pc-link">
             <span class="pc-micon"><i class="ti ti-building-store"></i></span>
             <span class="pc-mtext">Jual Sampah</span>
           </a>
         </li>
         <li class="pc-item">
-          <a href="#" class="pc-link">
+          <a href="{{ route('transaksi.index') }}" class="pc-link">
             <span class="pc-micon"><i class="ti ti-activity"></i></span>
             <span class="pc-mtext">Aktifitas</span>
           </a>

@@ -6,8 +6,26 @@ use Illuminate\Database\Eloquent\Model;
 
 class Transaksi extends Model
 {
+    protected $fillable = [
+        'user_id',
+        'nomor_transaksi',
+        'jenis_sampah',
+        'berat',
+        'foto_sampah',
+        'alamat',
+        'waktu_penjemputan',
+        'total_harga',
+        'status',
+        'pembayaran',
+    ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
     public static function nomorTransaksi(){
-        $maxId = self::max('id');
+        $maxId = self::max('id') ?? 0;
         $prefix = "TRX";
         $date = date("Ymd");
         $kode = $prefix . $date . sprintf("%04s", $maxId + 1);

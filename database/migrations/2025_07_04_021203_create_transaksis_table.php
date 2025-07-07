@@ -13,8 +13,16 @@ return new class extends Migration
     {
         Schema::create('transaksis', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id');
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->string('nomor_transaksi');
+            $table->string('jenis_sampah');
+            $table->decimal('berat', 8, 2);
+            $table->string('foto_sampah')->nullable();
+            $table->text('alamat');
+            $table->dateTime('waktu_penjemputan');
+            $table->decimal('total_harga', 10, 2)->default(0);
+            $table->string('status')->default('Menunggu Konfirmasi');
+            $table->string('pembayaran')->default('Belum Dibayar');
             $table->timestamps();
         });
     }
