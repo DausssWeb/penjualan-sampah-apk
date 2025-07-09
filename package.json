@@ -4,7 +4,10 @@
     "type": "module",
     "scripts": {
         "build": "vite build",
-        "dev": "vite"
+        "dev": "vite",
+        "serve": "php artisan serve",
+        "watch": "npm run dev",
+        "serve-all": "npm-run-all --parallel serve dev"
     },
     "devDependencies": {
         "@popperjs/core": "^2.11.6",
