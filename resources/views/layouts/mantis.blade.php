@@ -14,7 +14,7 @@
   <meta name="author" content="CodedThemes">
 
   <!-- [Favicon] icon -->
-  <link rel="icon" href="{{ asset('template/dist') }}/assets/images/favicon.svg" type="image/x-icon"> 
+  <link rel="icon" href="{{ asset('images/admin.jpg') }}" type="image/x-icon"> 
   <!-- [Google Font] Family -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@300;400;500;600;700&display=swap" id="main-font-link">
   <!-- [Tabler Icons] https://tablericons.com -->
@@ -60,6 +60,35 @@
       background-color: rgba(255, 255, 255, 0.1);
       border-radius: 5px;
     }
+
+    /* Custom styles for the sidebar logo */
+    .sidebar-brand-horizontal {
+      display: flex;
+      align-items: center;
+      padding: 15px 20px;
+      gap: 10px;
+    }
+
+    .sidebar-logo {
+      width: 45px;
+      height: 45px;
+      object-fit: contain;
+      border-radius: 8px;
+    }
+
+    .sidebar-title {
+      font-size: 16px;
+      font-weight: bold;
+      color: #1f4037;
+      margin: 0;
+      margin-left: 10px; 
+    }
+
+    .sidebar-link {
+      display: flex;
+      align-items: center;
+      text-decoration: none;
+    }
   </style>
 
 </head>
@@ -76,12 +105,24 @@
 <!-- [ Pre-loader ] End -->
 <!-- [ Sidebar Menu ] start -->
 <nav class="pc-sidebar navbar-green pc-sidebar-collapse">
-  <div class="navbar-wrapper">
-    <div class="m-header ">
-      <a href="{{ route('home') }}" class="b-brand text-primary">
-        <span>Aplikasi Penjualan Sampah</span>
-      </a>
-    </div>
+<div class="navbar-wrapper">
+  <div class="sidebar-brand-horizontal">
+    <a href="{{ route('home') }}" class="sidebar-link">
+      @if (Auth::user()->role_id == '1')
+      <img src="{{ asset('images/admin.jpg') }}" alt="Foto_logo" class="sidebar-logo">
+      @else
+      <img src="{{ asset('images/logo.jpg') }}" alt="Foto_logo" class="sidebar-logo">
+      @endif
+      <h1 class="sidebar-title">
+        @if (Auth::user()->role_id == '1')
+          Admin Jual Sampah
+        @else
+          Jasa Jual Sampah
+        @endif
+      </h1>
+    </a>
+  </div>
+</div>
     <hr class="mt-0 border-width-1 border-width-1">
     <div class="navbar-content">
       <ul class="pc-navbar">

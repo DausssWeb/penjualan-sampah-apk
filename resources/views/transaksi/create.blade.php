@@ -27,7 +27,7 @@
 
                 <div class="mb-3">
                     <label for="berat" class="form-label">Berat (kg)</label>
-                    <input type="number" step="0.01" name="berat" id="berat" class="form-control @error('berat') is-invalid @enderror" value="{{ old('berat') }}">
+                    <input type="number" step="0.01" name="berat" id="berat" class="form-control @error('berat') is-invalid @enderror" value="{{ old('berat') }}" placeholder="Masukkan berat sampah (kg)">
                     @error('berat')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
@@ -43,7 +43,7 @@
 
                 <div class="mb-3">
                     <label for="alamat" class="form-label">Alamat</label>
-                    <textarea name="alamat" id="alamat" rows="3" class="form-control @error('alamat') is-invalid @enderror">{{ old('alamat') }}</textarea>
+                    <textarea name="alamat" id="alamat" rows="3" class="form-control @error('alamat') is-invalid @enderror" placeholder="Masukan Alamat Lengkap">{{ old('alamat') }}</textarea>
                     @error('alamat')
                     <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
