@@ -45,44 +45,54 @@ class TransaksiController extends Controller
         return view('transaksi.create');
     }
 
-
     /**
      * Simpan transaksi baru
      */
     public function store(Request $request)
     {
-        // buat tanggal batas untuk validasi sampai 1 tahun ke depan
-        $maxDate = Carbon::now()->addYear()->format('d/m/Y H:i');
-
-        // validasi
-        $request->validate([
+        // Buat tanggal batas untuk validasi (1 tahun ke depan)
+        $maxDate = Carbon::now()->addYear()->format('Y-m-d H:i');
+        
+        $validator = \Validator::make($request->all(), [
             'jenis_sampah' => 'required|string',
             'berat' => 'required|numeric|min:0.1',
-            'foto_sampah' => 'required|image|mimes:jpeg,png,jpg|max:5120',
-            //jika ingin bersifat opsional tapi tetep validasi ketika ada file, pakai:
-            // 'foto_sampah' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:5120',
-            'alamat' => 'required|string',
-            //after:now dan before untuk membatasi rentang waktu
+            // Validasi foto - wajib jika tidak ada foto_info (file lama)
+            'foto_sampah' => $request->has('foto_info') && $request->foto_info ? 'nullable|image|mimes:jpeg,png,jpg,gif|max:5120' : 'required|image|mimes:jpeg,png,jpg,gif|max:5120',
+            'alamat' => 'required|string|max:500',
             'waktu_penjemputan' => 'required|date|after:now|before:' . $maxDate,
         ], [
             'jenis_sampah.required' => 'Jenis sampah harus diisi.',
             'berat.required' => 'Berat harus diisi.',
             'berat.numeric' => 'Berat harus berupa angka.',
             'berat.min' => 'Berat minimal 0.1 kg.',
-            'foto_sampah.required' => 'Foto sampah harus di upload.',
-            'foto_sampah.image' => 'File sampah harus berupa gambar.',
-            'foto_sampah.mimes' => 'Format foto sampah harus JPEG, PNG, atau JPG.',
-            'foto_sampah.max' => 'Ukuran foto sampah maksimal 5 MB.',
+            'foto_sampah.required' => 'Foto sampah harus diupload.',
+            'foto_sampah.image' => 'File harus berupa gambar.',
+            'foto_sampah.mimes' => 'Format foto harus jpeg, png, jpg, atau gif.',
+            'foto_sampah.max' => 'Ukuran foto maksimal 5 MB.',
             'alamat.required' => 'Alamat harus diisi.',
             'alamat.string' => 'Alamat harus berupa teks.',
+            'alamat.max' => 'Alamat maksimal 500 karakter.',
             'waktu_penjemputan.required' => 'Waktu penjemputan harus diisi.',
             'waktu_penjemputan.date' => 'Waktu penjemputan harus berupa tanggal yang valid.',
-            'waktu_penjemputan.after' => 'Waktu penjemputan harus dalam tahun sekarang.',
+            'waktu_penjemputan.after' => 'Waktu penjemputan harus setelah sekarang.',
             'waktu_penjemputan.before' => 'Waktu penjemputan maksimal 1 tahun ke depan.',
         ]);
 
+        if ($validator->fails()) {
+            if ($request->ajax()) {
+                return response()->json([
+                    'success' => false,
+                    'errors' => $validator->errors(),
+                    'message' => 'Mohon perbaiki kesalahan pada form.'
+                ], 422);
+            }
+            
+            return redirect()->back()
+                ->withErrors($validator)
+                ->withInput();
+        }
+
         // Upload foto
-        //pake try catch jika ada error
         $fotoPath = null;
         if ($request->hasFile('foto_sampah')) {
             try {
@@ -110,27 +120,46 @@ class TransaksiController extends Controller
         // Simpan
         try {
             Transaksi::create([
-            'user_id' => Auth::id(),
-            'nomor_transaksi' => Transaksi::nomorTransaksi(),
-            'jenis_sampah' => $request->jenis_sampah,
-            'berat' => $request->berat,
-            'foto_sampah' => $fotoPath,
-            'alamat' => $request->alamat,
-            'waktu_penjemputan' => $request->waktu_penjemputan,
-            'total_harga' => $totalHarga,
-            'status' => 'Menunggu Konfirmasi',
-            'pembayaran' => 'Belum Dibayar',
-        ]);
-         return redirect()->route('transaksi.index')->with('success', 'Transaksi berhasil diajukan!');
-    } catch (\Exception $e) {
-        //hapus foto jika gagal di simpan di database
-        if ($fotoPath) {
-            Storage::disk('public')->delete($fotoPath);
+                'user_id' => Auth::id(),
+                'nomor_transaksi' => Transaksi::nomorTransaksi(),
+                'jenis_sampah' => $request->jenis_sampah,
+                'berat' => $request->berat,
+                'foto_sampah' => $fotoPath,
+                'alamat' => $request->alamat,
+                'waktu_penjemputan' => $request->waktu_penjemputan,
+                'total_harga' => $totalHarga,
+                'status' => 'Menunggu Konfirmasi',
+                'pembayaran' => 'Belum Dibayar',
+            ]);
+
+            // Jika request AJAX
+            if ($request->ajax()) {
+                return response()->json([
+                    'success' => true,
+                    'message' => 'Transaksi berhasil diajukan!',
+                    'redirect' => route('transaksi.index')
+                ]);
+            }
+
+            return redirect()->route('transaksi.index')->with('success', 'Transaksi berhasil diajukan!');
+        } catch (\Exception $e) {
+            // Hapus foto jika gagal simpan ke database
+            if ($fotoPath) {
+                Storage::disk('public')->delete($fotoPath);
+            }
+            
+            // ini kalau request nya pake ajax
+            if ($request->ajax()) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Gagal menyimpan transaksi. Silakan coba lagi.'
+                ], 422);
+            }
+            
+            return redirect()->back()
+                ->withInput()
+                ->withErrors(['error' => 'Gagal menyimpan transaksi. Silakan coba lagi.']);
         }
-        return redirect()->back()
-            ->withInput()
-            ->withErrors(['error' => 'Gagal menyimpan transaksi. Silakan coba lagi.']);
-        }   
     }
 
     /**
