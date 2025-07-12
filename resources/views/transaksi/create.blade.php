@@ -9,19 +9,18 @@
         <form action="{{ route('transaksi.store') }}" method="POST" enctype="multipart/form-data" class="card shadow p-4">
             @csrf
             <div class="mb-3">
-                <label for="jenis_sampah" class="form-label">Jenis Sampah</label>
-                <select name="jenis_sampah" id="jenis_sampah" class="form-control @error('jenis_sampah') is-invalid @enderror">
-                    <option value="">Pilih jenis sampah</option>
-                    <option value="Plastik Botol" {{ old('jenis_sampah') == 'Plastik Botol' ? 'selected' : '' }}>Plastik Botol</option>
-                    <option value="Kaleng" {{ old('jenis_sampah') == 'Kaleng' ? 'selected' : '' }}>Kaleng</option>
-                    <option value="Kertas" {{ old('jenis_sampah') == 'Kertas' ? 'selected' : '' }}>Kertas</option>
-                    <option value="Botol Kaca" {{ old('jenis_sampah') == 'Botol Kaca' ? 'selected' : '' }}>Botol Kaca</option>
-                    <option value="Kardus" {{ old('jenis_sampah') == 'Kardus' ? 'selected' : '' }}>Kardus</option>
-                    <option value="Logam" {{ old('jenis_sampah') == 'Logam' ? 'selected' : '' }}>Logam</option>
+                <label for="harga_id" class="form-label">Jenis Sampah</label>
+                <select name="harga_id" id="harga_id" class="form-control @error('harga_id') is-invalid @enderror">
+                <option value="">Pilih jenis sampah</option>
+                @foreach ($hargas as $harga)
+                    <option value="{{ $harga->id }}" {{ old('harga_id') == $harga->id ? 'selected' : '' }}>
+                    {{ $harga->jenis_sampah }}
+                    </option>
+                @endforeach
                 </select>
-                @error('jenis_sampah')
-                    <div class="invalid-feedback">{{ $message }}</div>
-                @enderror 
+                @error('harga_id')
+                <div class="invalid-feedback">{{ $message }}</div>
+                @enderror
             </div>
 
             <div class="mb-3">

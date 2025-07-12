@@ -9,7 +9,7 @@ class Transaksi extends Model
     protected $fillable = [
         'user_id',
         'nomor_transaksi',
-        'jenis_sampah',
+        'harga_id',
         'berat',
         'foto_sampah',
         'alamat',
@@ -30,5 +30,9 @@ class Transaksi extends Model
         $date = date("Ymd");
         $kode = $prefix . $date . sprintf("%04s", $maxId + 1);
         return $kode;
+    }
+
+    public function harga(){
+        return $this->belongsTo(Harga::class);
     }
 }

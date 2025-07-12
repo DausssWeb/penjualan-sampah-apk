@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->string('nomor_transaksi');
-            $table->string('jenis_sampah');
+            $table->foreignId('harga_id')->nullable()->constrained('hargas')->nullOnDelete();
             $table->decimal('berat', 8, 2);
             $table->string('foto_sampah')->nullable();
             $table->text('alamat');

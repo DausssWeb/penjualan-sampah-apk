@@ -26,7 +26,7 @@
                         <td>{{ $transaksi->nomor_transaksi }}</td>
                         <td>{{ \Carbon\Carbon::parse($transaksi->waktu_penjemputan)->format('d/m/Y') }}</td>
                         <td>{{ \Carbon\Carbon::parse($transaksi->waktu_penjemputan)->format('H:i') }}</td>
-                        <td>{{ $transaksi->jenis_sampah }}</td>
+                        <td>{{ $transaksi->harga->jenis_sampah ?? '-' }}</td>
                         <td>{{ $transaksi->berat }} kg</td>
                         <td>Rp {{ number_format($transaksi->total_harga, 0, ',', '.') }}</td>
                         <td>

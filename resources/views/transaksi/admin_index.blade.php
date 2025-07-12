@@ -34,7 +34,7 @@
                         <td class="text-center">{{ $key + 1 }}</td>
                         <td>{{ $transaksi->nomor_transaksi }}</td>
                         <td>{{ $transaksi->user->name ?? '-' }}</td>
-                        <td>{{ $transaksi->jenis_sampah }}</td>
+                        <td>{{ $transaksi->harga->jenis_sampah ?? '-' }}</td>
                         <td class="text-center">{{ $transaksi->berat }}</td>
                         <td>Rp{{ number_format($transaksi->total_harga, 0, ',', '.') }}</td>
                         <td>

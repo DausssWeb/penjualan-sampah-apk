@@ -10,4 +10,8 @@ class Harga extends Model
         'jenis_sampah', 
         'hargaPerKg'
     ];
+
+    public function transaksi(){
+        return $this->hasMany(Transaksi::class);
+    }
 }
