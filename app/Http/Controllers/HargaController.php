@@ -22,11 +22,12 @@ class HargaController extends Controller
     {  
     $request->validate([
        'jenis_sampah' => 'required',
-       'harga' => 'required|numeric',
+       'harga' => 'required|numeric|min:1',
     ], [
         'jenis_sampah.required' => 'Jenis sampah harus diisi.',
         'harga.required' => 'Harga per kg harus diisi.',
         'harga.numeric' => 'Harga per kg harus berupa angka.',
+        'harga.min' => 'Harga per kg tidak boleh negatif.'
     ]);
 
     Harga::create([
@@ -47,11 +48,12 @@ class HargaController extends Controller
     {
         $request->validate([
             'jenis_sampah' => 'required',
-            'harga' => 'required|numeric',
+            'harga' => 'required|numeric|min:1',
         ], [
             'jenis_sampah.required' => 'Jenis sampah harus diisi.',
             'harga.required' => 'Harga per kg harus diisi.',
             'harga.numeric' => 'Harga per kg harus berupa angka.',
+            'harga.min' => 'Harga per kg tidak boleh negatif.'
         ]);
 
         $harga->update([

@@ -27,7 +27,7 @@
         <div class="bg-light p-3 rounded">
             <div class="row">
                 @foreach ($hargas as $item)
-                <div class="col-md-4"><strong>{{ $item->jenis_sampah }}</strong><br><span class="harga-sampah">Rp {{ number_format($item->hargaPerKg) }}</span> <small>per kg</small></div>
+                    <div class="col-md-4"><strong>{{ $item->jenis_sampah }}</strong><br><span class="harga-sampah">Rp {{ number_format($item->hargaPerKg) }}</span> <small>per kg</small></div>
                 @endforeach
             </div>
         </div>

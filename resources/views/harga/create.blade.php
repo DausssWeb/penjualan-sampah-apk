@@ -25,8 +25,8 @@
             <label for="hargaPerKg">Harga Per Kg</label>
             <input type="number" name="harga" id="harga" 
             value="{{ old('harga') }}" 
-            class="form-control @error('hargaPerKg') is-invalid @enderror">
-        @error('hargaPerKg')
+            class="form-control @error('harga') is-invalid @enderror">
+        @error('harga')
             <div class="invalid-feedback">{{ $message }}</div>
         @enderror    
 </div>

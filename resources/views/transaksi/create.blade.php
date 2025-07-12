@@ -14,11 +14,6 @@
                     <select name="jenis_sampah" id="jenis_sampah" value="{{ old('jenis_sampah') }}" class="form-control @error('jenis_sampah') is-invalid @enderror">
                         <option value="">Pilih jenis sampah</option>
                         <option value="Plastik Botol">Plastik Botol</option>
-                        <option value="Kaleng">Kaleng</option>
-                        <option value="Kertas">Kertas</option>
-                        <option value="Botol Kaca">Botol Kaca</option>
-                        <option value="Kardus">Kardus</option>
-                        <option value="Logam">Logam</option>
                     </select>
                     @error('jenis_sampah')
                         <div class="invalid-feedback">{{ $message }}</div>
