@@ -242,7 +242,7 @@ document.querySelector('form').addEventListener('submit', function(e) {
     }
 });
 
-// Real-time validation
+// real time buat validasi nya biar jalan
 document.getElementById('jenis_sampah').addEventListener('change', function() {
     if (this.value) {
         this.classList.remove('is-invalid');

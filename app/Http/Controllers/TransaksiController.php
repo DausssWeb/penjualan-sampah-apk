@@ -148,7 +148,7 @@ class TransaksiController extends Controller
                 Storage::disk('public')->delete($fotoPath);
             }
             
-            // Jika request AJAX
+            // ini kalau request nya pake ajax
             if ($request->ajax()) {
                 return response()->json([
                     'success' => false,
