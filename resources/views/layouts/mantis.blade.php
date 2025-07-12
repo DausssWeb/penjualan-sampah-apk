@@ -147,7 +147,7 @@
           </a>
         </li>
         <li class="pc-item">
-          <a href="{{ route('harga') }}" class="pc-link">
+          <a href="{{ route('harga.index') }}" class="pc-link">
             <span class="pc-micon"><i class="ti ti-report-money"></i></span>
             <span class="pc-mtext">Harga Sampah</span>
           </a>
@@ -168,7 +168,7 @@
         <li class="pc-item">
           <a href="{{ route('transaksi.index') }}" class="pc-link">
             <span class="pc-micon"><i class="ti ti-activity"></i></span>
-            <span class="pc-mtext">Aktifitas</span>
+            <span class="pc-mtext">Aktivitas</span>
           </a>
         </li>
         <li class="pc-item">
@@ -421,6 +421,8 @@
     </div>
   </footer>
   
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  @stack('js')
   <!-- [Page Specific JS] start -->
   <script src="{{ asset('template/dist') }}/assets/js/plugins/apexcharts.min.js"></script>
   <script src="{{ asset('template/dist') }}/assets/js/pages/dashboard-default.js"></script>

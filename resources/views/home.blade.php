@@ -26,14 +26,9 @@
         <h5>Berikut harga sampah saat ini:</h5>
         <div class="bg-light p-3 rounded">
             <div class="row">
-                <div class="col-md-4"><strong>Plastik Botol</strong><br><span class="harga-sampah">Rp 3.000</span> <small>per kg</small></div>
-                <div class="col-md-4"><strong>Kaleng</strong><br><span class="harga-sampah">Rp 4.000</span> <small>per kg</small></div>
-                <div class="col-md-4"><strong>Logam</strong><br><span class="harga-sampah">Rp 5.000</span> <small>per kg</small></div>
-            </div>
-            <div class="row mt-3">
-                <div class="col-md-4"><strong>Kertas</strong><br><span class="harga-sampah">Rp 2.500</span> <small>per kg</small></div>
-                <div class="col-md-4"><strong>Kardus</strong><br><span class="harga-sampah">Rp 2.000</span> <small>per kg</small></div>
-                <div class="col-md-4"><strong>Botol Kaca</strong><br><span class="harga-sampah">Rp 1.500</span> <small>per kg</small></div>
+                @foreach ($hargas as $item)
+                <div class="col-md-4"><strong>{{ $item->jenis_sampah }}</strong><br><span class="harga-sampah">Rp {{ number_format($item->hargaPerKg) }}</span> <small>per kg</small></div>
+                @endforeach
             </div>
         </div>
     </div>

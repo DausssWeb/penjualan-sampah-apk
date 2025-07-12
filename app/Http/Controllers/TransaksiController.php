@@ -6,6 +6,7 @@ use App\Models\Transaksi;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use Carbon\Carbon;
 
 class TransaksiController extends Controller
 {
@@ -50,29 +51,47 @@ class TransaksiController extends Controller
      */
     public function store(Request $request)
     {
+        // buat tanggal batas untuk validasi sampai 1 tahun ke depan
+        $maxDate = Carbon::now()->addYear()->format('d/m/Y H:i');
+
+        // validasi
         $request->validate([
             'jenis_sampah' => 'required|string',
             'berat' => 'required|numeric|min:0.1',
-            'foto_sampah' => 'nullable|image|max:5120',
+            'foto_sampah' => 'required|image|mimes:jpeg,png,jpg|max:5120',
+            //jika ingin bersifat opsional tapi tetep validasi ketika ada file, pakai:
+            // 'foto_sampah' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:5120',
             'alamat' => 'required|string',
-            'waktu_penjemputan' => 'required|date',
+            //after:now dan before untuk membatasi rentang waktu
+            'waktu_penjemputan' => 'required|date|after:now|before:' . $maxDate,
         ], [
             'jenis_sampah.required' => 'Jenis sampah harus diisi.',
             'berat.required' => 'Berat harus diisi.',
             'berat.numeric' => 'Berat harus berupa angka.',
             'berat.min' => 'Berat minimal 0.1 kg.',
-            'foto_sampah.image' => 'Foto sampah harus berupa gambar.',
+            'foto_sampah.required' => 'Foto sampah harus di upload.',
+            'foto_sampah.image' => 'File sampah harus berupa gambar.',
+            'foto_sampah.mimes' => 'Format foto sampah harus JPEG, PNG, atau JPG.',
             'foto_sampah.max' => 'Ukuran foto sampah maksimal 5 MB.',
             'alamat.required' => 'Alamat harus diisi.',
             'alamat.string' => 'Alamat harus berupa teks.',
             'waktu_penjemputan.required' => 'Waktu penjemputan harus diisi.',
-            'waktu_penjemputan.date' => 'Waktu penjemputan harus berupa tanggal.',
+            'waktu_penjemputan.date' => 'Waktu penjemputan harus berupa tanggal yang valid.',
+            'waktu_penjemputan.after' => 'Waktu penjemputan harus dalam tahun sekarang.',
+            'waktu_penjemputan.before' => 'Waktu penjemputan maksimal 1 tahun ke depan.',
         ]);
 
         // Upload foto
+        //pake try catch jika ada error
         $fotoPath = null;
         if ($request->hasFile('foto_sampah')) {
-            $fotoPath = $request->file('foto_sampah')->store('sampah', 'public');
+            try {
+                $fotoPath = $request->file('foto_sampah')->store('sampah', 'public');
+            } catch (\Exception $e) {
+                return redirect()->back()
+                    ->withInput()
+                    ->withErrors(['foto_sampah' => 'Gagal mengupload foto. Silakan coba lagi.']);
+            }
         }
 
         // Hitung harga
@@ -89,7 +108,8 @@ class TransaksiController extends Controller
         $totalHarga = $request->berat * $hargaPerKg;
 
         // Simpan
-        Transaksi::create([
+        try {
+            Transaksi::create([
             'user_id' => Auth::id(),
             'nomor_transaksi' => Transaksi::nomorTransaksi(),
             'jenis_sampah' => $request->jenis_sampah,
@@ -101,8 +121,16 @@ class TransaksiController extends Controller
             'status' => 'Menunggu Konfirmasi',
             'pembayaran' => 'Belum Dibayar',
         ]);
-
-        return redirect()->route('transaksi.index')->with('success', 'Transaksi berhasil diajukan!');
+         return redirect()->route('transaksi.index')->with('success', 'Transaksi berhasil diajukan!');
+    } catch (\Exception $e) {
+        //hapus foto jika gagal di simpan di database
+        if ($fotoPath) {
+            Storage::disk('public')->delete($fotoPath);
+        }
+        return redirect()->back()
+            ->withInput()
+            ->withErrors(['error' => 'Gagal menyimpan transaksi. Silakan coba lagi.']);
+        }   
     }
 
     /**
@@ -122,5 +150,10 @@ class TransaksiController extends Controller
         ]);
 
         return redirect()->back()->with('success', 'Status transaksi berhasil diperbarui.');
+    }
+
+    public function myTransaction() {
+        $transaksi = Transaksi::where('user_id', Auth::id())->get();
+        return response()->json($transaksi);
     }
 }

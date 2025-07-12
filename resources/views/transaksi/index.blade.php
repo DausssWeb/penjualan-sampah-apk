@@ -38,7 +38,12 @@
                                 <span class="badge bg-warning text-dark">Menunggu Konfirmasi</span>
                             @endif
                         </td>
-                        <td><span class="badge bg-secondary">{{ $transaksi->pembayaran }}</span></td>
+                        <td>@if($transaksi->pembayaran == 'Sudah Dibayar')
+                                <span class="badge bg-primary">Sudah Dibayar</span>
+                            @else
+                                <span class="badge bg-secondary">Belum Dibayar</span>
+                            @endif
+                        </td>
                     </tr>
                     @empty
                     <tr>
@@ -49,4 +54,28 @@
             </table>
         </div>
 </div>
+@push('js')
+    <script>
+
+         function getTransaksi() {
+                $.ajax({
+                    type: "GET",
+                    url: "/my-transaksi",
+                    success: function (response) {
+                        console.log(response);
+                        
+                    }
+                });
+            }
+
+        $(document).ready(function () {
+
+            
+            setInterval(() => {
+                getTransaksi();
+                
+            }, 1000);
+        });
+    </script>
+@endpush
 @endsection

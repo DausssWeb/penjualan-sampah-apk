@@ -3,6 +3,8 @@
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TransaksiController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\HargaController;
+use App\Models\Harga;
 use App\Models\Transaksi;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
@@ -14,8 +16,10 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', function () {
-    return view('home');
+    $hargas = Harga::all();
+    return view('home', compact('hargas'));
 })->name('home')->middleware('auth');
+Route::get('/my-transaksi',[TransaksiController::class,'myTransaction']);
 
 // Admin
 Route::resource('users', UserController::class)->middleware('isAdmin');
@@ -29,6 +33,8 @@ Route::get('/harga', function () {
 Route::resource('profile', ProfileController::class);
 Route::resource('transaksi', TransaksiController::class);
 
+//Harga
+Route::resource('harga', HargaController::class);
 
 // Route::get('test', function(){
 //     $kode = Transaksi::nomorTransaksi();

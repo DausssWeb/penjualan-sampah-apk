@@ -2,10 +2,10 @@
 
 @section('content')
 <div class="container mt-4">
-    <h3 class="mb-4">Data Transaksi</h3>
-
-    <div class="card shadow-sm">
-        <div class="card-body">
+    <div class="card-header">
+        <h3 class="card-title">Data Transaksi</h3>
+    </div>
+    <div class="card-body">
             <style>
                 .table-striped-green tbody tr:nth-of-type(odd) {
                     background-color: #d4edda; /* hijau muda Bootstrap */
@@ -14,7 +14,7 @@
                     background-color: #f8f9fa; /* abu-abu terang (putih kehijauan) */
                 }
             </style>
-            <table class="table table-bordered align-middle">
+            <table class="table table-bordered">
                 <thead class="text-center">
                     <tr>
                         <th>No</th>
@@ -78,7 +78,6 @@
                     @endforelse
                 </tbody>
             </table>
-        </div>
     </div>
 </div>
 @endsection
