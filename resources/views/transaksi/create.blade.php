@@ -8,26 +8,6 @@
     <div class="card-body">
         <form action="{{ route('transaksi.store') }}" method="POST" enctype="multipart/form-data" class="card shadow p-4">
             @csrf
-
-<<<<<<< HEAD
-                <div class="mb-3">
-                    <label for="jenis_sampah" class="form-label">Jenis Sampah</label>
-                    <select name="jenis_sampah" id="jenis_sampah" value="{{ old('jenis_sampah') }}" class="form-control @error('jenis_sampah') is-invalid @enderror">
-                        <option value="">Pilih jenis sampah</option>
-                        <option value="Plastik Botol">Plastik Botol</option>
-                    </select>
-                    @error('jenis_sampah')
-                        <div class="invalid-feedback">{{ $message }}</div>
-                    @enderror 
-=======
-            <!-- Error umum -->
-            @if($errors->has('error'))
-                <div class="alert alert-danger">
-                    {{ $errors->first('error') }}
->>>>>>> c056ab81e252a00d423a378a984cced60a7aea88
-                </div>
-            @endif
-
             <div class="mb-3">
                 <label for="jenis_sampah" class="form-label">Jenis Sampah</label>
                 <select name="jenis_sampah" id="jenis_sampah" class="form-control @error('jenis_sampah') is-invalid @enderror">
