@@ -106,23 +106,22 @@
 <!-- [ Sidebar Menu ] start -->
 <nav class="pc-sidebar navbar-green pc-sidebar-collapse">
 <div class="navbar-wrapper">
-  <div class="sidebar-brand-horizontal">
-    <a href="{{ route('home') }}" class="sidebar-link">
+  <div class="m-header">
+    <a href="{{ route('home') }}" class="b-brand text-primary">
       @if (Auth::user()->role_id == '1')
       <img src="{{ asset('images/admin.jpg') }}" alt="Foto_logo" class="sidebar-logo">
       @else
       <img src="{{ asset('images/logo.jpg') }}" alt="Foto_logo" class="sidebar-logo">
       @endif
-      <h1 class="sidebar-title">
+      <span>
         @if (Auth::user()->role_id == '1')
           Admin Jual Sampah
         @else
           Jasa Jual Sampah
         @endif
-      </h1>
+      </span>
     </a>
   </div>
-</div>
     <hr class="mt-0 border-width-1 border-width-1">
     <div class="navbar-content">
       <ul class="pc-navbar">
@@ -180,7 +179,7 @@
         @endif
       </ul>
     </div>
-  </div>
+</div>
 </nav>
 <!-- [ Sidebar Menu ] end -->
   
