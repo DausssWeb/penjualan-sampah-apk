@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Carbon\Carbon;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class TransaksiController extends Controller
 {
@@ -106,13 +107,15 @@ class TransaksiController extends Controller
                 'pembayaran' => 'Belum Dibayar',
             ]);
 
-            return redirect()->route('transaksi.index')->with('success', 'Transaksi berhasil diajukan!');
+            Alert::success('Berhasil', 'Transaksi berhasil diajukan!');
+            return redirect()->route('transaksi.index');
         } catch (\Exception $e) {
             if ($fotoPath) {
                 Storage::disk('public')->delete($fotoPath);
             }
 
-            return redirect()->back()->withInput()->withErrors(['error' => 'Gagal menyimpan transaksi. Silakan coba lagi.']);
+            Alert::error('Gagal', 'Gagal menyimpan transaksi. Silakan coba lagi.');
+            return redirect()->back()->withInput();
         }
     }
 

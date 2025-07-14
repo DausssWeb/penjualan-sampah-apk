@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Harga;
 use Illuminate\Http\Request;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class HargaController extends Controller
 {
@@ -35,7 +36,8 @@ class HargaController extends Controller
         'hargaPerKg' => $request->harga
     ]);
 
-    return redirect()->route('harga.index')->with('success', 'Harga berhasil ditambahkan');
+    Alert::success('Berhasil', 'Harga berhasil ditambahkan!');
+    return redirect()->route('harga.index');
     }
 
     public function edit(String $id)
@@ -61,12 +63,14 @@ class HargaController extends Controller
         'hargaPerKg' => $request->harga,
         ]);
 
-    return redirect()->route('harga.index')->with('success', 'Harga berhasil diperbarui');
+        Alert::success('Berhasil', 'Harga berhasil diperbarui!');
+        return redirect()->route('harga.index');
     }
 
     public function destroy(String $id)
     {
         Harga::destroy($id);
+        Alert::success('Berhasil', 'Harga berhasil dihapus!');
         return redirect()->route('harga.index');
     }
 }
