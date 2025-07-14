@@ -2,7 +2,6 @@
 
 @section('content')
 <div class="container mt-4">
-<<<<<<< HEAD
     <div class="card-header">
         <h3 class="mb-1">Form Jual Sampah</h3>
     </div>
@@ -23,14 +22,12 @@
                 <div class="invalid-feedback">{{ $message }}</div>
                 @enderror
             </div>
-=======
         <div class="card-header">
             <h3 class="mb-1">Form Jual Sampah</h3>
         </div>
         <div class="card-body">
             <form action="{{ route('transaksi.store') }}" method="POST" enctype="multipart/form-data" class="card shadow p-4">
                 @csrf
->>>>>>> c2356d9ed6a90697f400ab4693d9d9d542b56243
 
                 <div class="mb-3">
                     <label for="jenis_sampah" class="form-label">Jenis Sampah</label>
