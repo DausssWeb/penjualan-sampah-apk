@@ -7,6 +7,7 @@ use App\Models\Transaksi;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use Carbon\Carbon;
 
 class TransaksiController extends Controller
 {
@@ -47,61 +48,41 @@ class TransaksiController extends Controller
         return view('transaksi.create', compact('hargas'));
     }
 
-
     /**
      * Simpan transaksi baru
      */
     public function store(Request $request)
     {
-<<<<<<< HEAD
-        $maxDate = Carbon::now()->addYear()->format('Y-m-d H:i');
+        $maxDate = Carbon::now()->addYears(2)->format('Y-m-d H:i');
 
         $validator = \Validator::make($request->all(), [
             'harga_id' => 'required|exists:hargas,id',
             'berat' => 'required|numeric|min:0.1',
-            'foto_sampah' => 'required|image|mimes:jpeg,png,jpg,gif|max:5120',
+            'foto_sampah' => 'required|string|max:5120',
             'alamat' => 'required|string|max:500',
             'waktu_penjemputan' => 'required|date|after:now|before:' . $maxDate,
-=======
-        $request->validate([
-            'jenis_sampah' => 'required|string',
-            'berat' => 'required|numeric|min:0.1',
-            'foto_sampah' => 'required|image|max:5120',
-            'alamat' => 'required|string',
-            'waktu_penjemputan' => 'required|date|after:now|before:' . date('Y-12-31 23:59:59', strtotime('+1 year')),
->>>>>>> c2356d9ed6a90697f400ab4693d9d9d542b56243
         ], [
             'harga_id.required' => 'Jenis sampah harus dipilih.',
             'harga_id.exists' => 'Jenis sampah tidak valid.',
             'berat.required' => 'Berat harus diisi.',
             'berat.numeric' => 'Berat harus berupa angka.',
             'berat.min' => 'Berat minimal 0.1 kg.',
-            'foto_sampah.required' => 'Foto sampah harus diisi.',
-            'foto_sampah.image' => 'Foto sampah harus berupa gambar.',
-            'foto_sampah.max' => 'Ukuran foto sampah maksimal 5 MB.',
+            'foto_sampah.required' => 'Foto sampah harus diupload.',
+            'foto_sampah.string' => 'File harus berupa gambar.',
+            'foto_sampah.max' => 'Ukuran foto maksimal 5 MB.',
             'alamat.required' => 'Alamat harus diisi.',
-<<<<<<< HEAD
             'waktu_penjemputan.required' => 'Waktu penjemputan harus diisi.',
             'waktu_penjemputan.date' => 'Format waktu penjemputan tidak valid.',
-            'waktu_penjemputan.after' => 'Waktu penjemputan harus setelah sekarang.',
-            'waktu_penjemputan.before' => 'Waktu penjemputan maksimal 1 tahun ke depan.',
+            'waktu_penjemputan.after' => 'Waktu penjemputan harus setelah waktu sekarang.',
+            'waktu_penjemputan.before' => 'Waktu penjemputan tidak boleh lebih dari 2 tahun dari sekarang.',
         ]);
 
         if ($validator->fails()) {
             return redirect()->back()->withErrors($validator)->withInput();
         }
 
-=======
-            'alamat.string' => 'Alamat harus berupa teks.',
-            'waktu_penjemputan.required' => 'Waktu penjemputan harus diisi.',
-            'waktu_penjemputan.date' => 'Waktu penjemputan harus berupa tanggal.',
-            'waktu_penjemputan.after' => 'Waktu penjemputan tidak boleh di masa lalu.',
-            'waktu_penjemputan.before' => 'Waktu penjemputan maksimal hingga akhir tahun depan.',
-        ]);
-
->>>>>>> c2356d9ed6a90697f400ab4693d9d9d542b56243
         // Upload foto
-        $fotoPath = null;
+        $fotoPath = $request->input('foto_sampah'); // bukan dari file
         if ($request->hasFile('foto_sampah')) {
             $fotoPath = $request->file('foto_sampah')->store('sampah', 'public');
         }
@@ -110,12 +91,11 @@ class TransaksiController extends Controller
         $harga = Harga::findOrFail($request->harga_id);
         $totalHarga = $request->berat * $harga->hargaPerKg;
 
-<<<<<<< HEAD
         // Simpan transaksi
         try {
             Transaksi::create([
                 'user_id' => Auth::id(),
-                'nomor_transaksi' => 'TRX-' . strtoupper(uniqid()),
+                'nomor_transaksi' => Transaksi::nomorTransaksi(),
                 'harga_id' => $harga->id,
                 'berat' => $request->berat,
                 'foto_sampah' => $fotoPath,
@@ -134,27 +114,22 @@ class TransaksiController extends Controller
 
             return redirect()->back()->withInput()->withErrors(['error' => 'Gagal menyimpan transaksi. Silakan coba lagi.']);
         }
-=======
-        $hargaPerKg = $hargaSampah[$request->jenis_sampah] ?? 0;
-        $totalHarga = $request->berat * $hargaPerKg;
+    }
 
-        // Simpan
-        Transaksi::create([
-            'user_id' => Auth::id(),
-            'nomor_transaksi' => Transaksi::nomorTransaksi(),
-            'jenis_sampah' => $request->jenis_sampah,
-            'berat' => $request->berat,
-            'foto_sampah' => $fotoPath,
-            'alamat' => $request->alamat,
-            'waktu_penjemputan' => $request->waktu_penjemputan,
-            'total_harga' => $totalHarga,
-            'status' => 'Menunggu Konfirmasi',
-            'pembayaran' => 'Belum Dibayar',
+    public function uploadFoto(Request $request)
+    {
+        $request->validate([
+            'foto_sampah' => 'required|image|mimes:jpeg,png,jpg,gif|max:5120',
         ]);
 
-        return redirect()->route('transaksi.index')->with('success', 'Transaksi berhasil diajukan!');
->>>>>>> c2356d9ed6a90697f400ab4693d9d9d542b56243
+        $path = $request->file('foto_sampah')->store('sampah', 'public');
+
+        return response()->json([
+            'status' => 'success',
+            'path' => $path,
+        ]);
     }
+
 
     /**
      * Admin update status & pembayaran
@@ -181,7 +156,10 @@ class TransaksiController extends Controller
      */
     public function myTransaction()
     {
-        $transaksi = Transaksi::where('user_id', Auth::id())->get();
+        $transaksi = Transaksi::with('harga')  // <-- tambahkan relasi
+            ->where('user_id', Auth::id())
+            ->get();
         return response()->json($transaksi);
     }
+
 }

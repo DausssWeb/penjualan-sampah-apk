@@ -32,6 +32,7 @@ Route::get('/harga', function () {
 // Masyarakat
 Route::resource('profile', ProfileController::class);
 Route::resource('transaksi', TransaksiController::class);
+Route::post('/transaksi/upload-foto', [TransaksiController::class, 'uploadFoto'])->name('transaksi.upload-foto');
 
 //Harga
 Route::resource('harga', HargaController::class);
