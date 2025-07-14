@@ -31,7 +31,7 @@ class TransaksiController extends Controller
             $query->where('pembayaran', $request->pembayaran);
         }
 
-        $transaksis = $query->orderBy('created_at', 'desc')->get();
+        $transaksis = $query->orderBy('created_at', 'asc')->get();
 
         if (Auth::user()->role_id == 1) {
             return view('transaksi.admin_index', compact('transaksis'));

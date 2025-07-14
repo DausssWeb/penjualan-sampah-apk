@@ -2,10 +2,12 @@
 
 @section('content')
 <div class="container mt-4">
-        <div class="card-header">
-            <h3 class="mb-1">Aktivitas</h3>
-        </div>
-        <div class="card-body">
+    <div class="card-header">
+        <h3 class="mb-1">Aktivitas</h3>
+    </div>
+    <div class="card-body">
+        <!-- Tambahkan wrapper responsive di sini -->
+        <div class="table-responsive">
             <table class="table table-bordered">
                 <thead>
                     <tr>
@@ -17,7 +19,6 @@
                         <th>Total Harga</th>
                         <th>Status</th>
                         <th>Pembayaran</th>
-                        
                     </tr>
                 </thead>
                 <tbody>
@@ -38,7 +39,8 @@
                                 <span class="badge bg-warning text-dark">Menunggu Konfirmasi</span>
                             @endif
                         </td>
-                        <td>@if($transaksi->pembayaran == 'Sudah Dibayar')
+                        <td>
+                            @if($transaksi->pembayaran == 'Sudah Dibayar')
                                 <span class="badge bg-primary">Sudah Dibayar</span>
                             @else
                                 <span class="badge bg-secondary">Belum Dibayar</span>
@@ -47,16 +49,18 @@
                     </tr>
                     @empty
                     <tr>
-                        <td colspan="6" class="text-center">Belum ada aktivitas transaksi.</td>
+                        <td colspan="8" class="text-center">Belum ada aktivitas transaksi.</td>
                     </tr>
                     @endforelse
                 </tbody>
             </table>
         </div>
+        <!-- END table-responsive -->
+    </div>
 </div>
-@push('js')
-    <script>
 
+@push('js')
+<script>
 function getTransaksi() {
     $.ajax({
         type: "GET",
@@ -91,7 +95,7 @@ function getTransaksi() {
                             <td>${tanggal}</td>
                             <td>${waktu}</td>
                             <td>${transaksi.harga?.jenis_sampah ?? '-'}</td>
-                            <td>${transaksi.berat} kg</td>
+                            <td>${parseFloat(transaksi.berat).toFixed(1)} kg</td>
                             <td>Rp ${parseInt(transaksi.total_harga).toLocaleString('id-ID')}</td>
                             <td>${statusBadge}</td>
                             <td>${pembayaranBadge}</td>
@@ -111,14 +115,12 @@ function getTransaksi() {
     });
 }
 
-        $(document).ready(function () {
-
-            
-            setInterval(() => {
-                getTransaksi();
-                
-            }, 1000);
-        });
-    </script>
+$(document).ready(function () {
+    setInterval(() => {
+        getTransaksi();
+    }, 1000);
+});
+</script>
 @endpush
+
 @endsection

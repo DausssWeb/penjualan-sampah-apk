@@ -6,14 +6,8 @@
         <h3 class="card-title">Data Transaksi</h3>
     </div>
     <div class="card-body">
-            <style>
-                .table-striped-green tbody tr:nth-of-type(odd) {
-                    background-color: #d4edda; /* hijau muda Bootstrap */
-                }
-                .table-striped-green tbody tr:nth-of-type(even) {
-                    background-color: #f8f9fa; /* abu-abu terang (putih kehijauan) */
-                }
-            </style>
+        <!-- Tambahkan wrapper responsive di sini -->
+        <div class="table-responsive">
             <table class="table table-bordered">
                 <thead class="text-center">
                     <tr>
@@ -78,6 +72,8 @@
                     @endforelse
                 </tbody>
             </table>
+        </div>
+        <!-- END responsive wrapper -->
     </div>
 </div>
 @endsection
