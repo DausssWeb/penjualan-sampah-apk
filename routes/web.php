@@ -25,17 +25,17 @@ Route::get('/my-transaksi',[TransaksiController::class,'myTransaction']);
 Route::resource('users', UserController::class)->middleware('isAdmin');
 Route::post('user-update-role', [UserController::class, 'updateRole'])->name('users.update-role');
 Route::put('/transaksi/{transaksi}/update-status', [TransaksiController::class, 'updateStatus'])->name('transaksi.updateStatus')->middleware('isAdmin');
-Route::get('/harga', function () {
-    return view('harga.index');
-})->name('harga')->middleware('auth');
+Route::resource('harga', HargaController::class)->middleware('isAdmin');
+
+// Route::get('/harga', function () {
+//     return view('harga.index');
+// })->name('harga')->middleware('isAdmin');
 
 // Masyarakat
 Route::resource('profile', ProfileController::class);
 Route::resource('transaksi', TransaksiController::class);
 Route::post('/transaksi/upload-foto', [TransaksiController::class, 'uploadFoto'])->name('transaksi.upload-foto');
 
-//Harga
-Route::resource('harga', HargaController::class);
 
 // Route::get('test', function(){
 //     $kode = Transaksi::nomorTransaksi();
