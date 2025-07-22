@@ -119,19 +119,70 @@ class TransaksiController extends Controller
         }
     }
 
+    public function destroy($id)
+    {
+        $transaksi = Transaksi::findOrFail($id);
+
+        // Hapus file foto jika ada
+        if ($transaksi->foto_sampah && Storage::disk('public')->exists($transaksi->foto_sampah)) {
+            Storage::disk('public')->delete($transaksi->foto_sampah);
+        }
+
+        // Admin boleh hapus apa saja
+        if (Auth::user()->role_id == 1) {
+            $transaksi->delete();
+            Alert::success('Berhasil', 'Transaksi berhasil dihapus.');
+            return redirect()->back();
+        }
+
+        // User hanya bisa hapus transaksi miliknya yang belum diproses
+        if ($transaksi->user_id == Auth::id() && $transaksi->status == 'Menunggu Konfirmasi') {
+            $transaksi->delete();
+            Alert::success('Berhasil', 'Transaksi berhasil dibatalkan.');
+            return redirect()->route('transaksi.index');
+        }
+
+        // Jika tidak memenuhi kondisi
+        Alert::error('Gagal', 'Kamu tidak memiliki izin menghapus transaksi ini.');
+        return redirect()->back();
+    }
+
+
     public function uploadFoto(Request $request)
     {
         $request->validate([
             'foto_sampah' => 'required|image|mimes:jpeg,png,jpg,gif|max:5120',
         ]);
 
-        $path = $request->file('foto_sampah')->store('sampah', 'public');
+        $userId = Auth::id();
+        $timestamp = now()->format('YmdHis'); // Misal: 20250722103045
+        $extension = $request->file('foto_sampah')->getClientOriginalExtension();
+
+        $fileName = 'foto_sampah-' . $userId . '-' . $timestamp . '.' . $extension;
+
+        // Simpan ke storage/app/public/sampah/
+        $path = $request->file('foto_sampah')->storeAs('sampah', $fileName, 'public');
 
         return response()->json([
             'status' => 'success',
             'path' => $path,
+            'filename' => $fileName
         ]);
     }
+
+    // public function uploadFoto(Request $request)
+    // {
+    //     $request->validate([
+    //         'foto_sampah' => 'required|image|mimes:jpeg,png,jpg,gif|max:5120',
+    //     ]);
+
+    //     $path = $request->file('foto_sampah')->store('sampah', 'public');
+
+    //     return response()->json([
+    //         'status' => 'success',
+    //         'path' => $path,
+    //     ]);
+    // }
 
 
     /**
@@ -154,9 +205,7 @@ class TransaksiController extends Controller
         return redirect()->back()->with('success', 'Status transaksi berhasil diperbarui.');
     }
 
-    /**
-     * API data transaksi user
-     */
+    // Transaksi user
     public function myTransaction()
     {
         $transaksi = Transaksi::with('harga')  // <-- tambahkan relasi
@@ -164,5 +213,18 @@ class TransaksiController extends Controller
             ->get();
         return response()->json($transaksi);
     }
+
+    // Transaksi admin
+    public function getJson()
+    {
+        $transaksis = \App\Models\Transaksi::with(['user', 'harga'])
+            ->orderBy('created_at', 'desc') // desc asc
+            ->get();
+
+        return response()->json($transaksis);
+    }
+
+
+
 
 }

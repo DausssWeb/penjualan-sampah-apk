@@ -12,6 +12,7 @@
   <meta name="description" content="Mantis is made using Bootstrap 5 design framework. Download the free admin template & use it for your project.">
   <meta name="keywords" content="Mantis, Dashboard UI Kit, Bootstrap 5, Admin Template, Admin Dashboard, CRM, CMS, Bootstrap Admin Template">
   <meta name="author" content="CodedThemes">
+  <meta name="csrf-token" content="{{ csrf_token() }}">
 
   <!-- [Favicon] icon -->
   <link rel="icon" href="{{ asset('images/admin.jpg') }}" type="image/x-icon"> 

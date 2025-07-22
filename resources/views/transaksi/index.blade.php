@@ -19,6 +19,7 @@
                         <th>Total Harga</th>
                         <th>Status</th>
                         <th>Pembayaran</th>
+                        <th>Aksi</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -46,10 +47,21 @@
                                 <span class="badge bg-secondary">Belum Dibayar</span>
                             @endif
                         </td>
+                        <td>
+                            @if($transaksi->status == 'Menunggu Konfirmasi')
+                            <form action="{{ route('transaksi.destroy', $transaksi->id) }}" method="POST" onsubmit="return confirm('Yakin ingin membatalkan transaksi ini?')">
+                                @csrf
+                                @method('DELETE')
+                                <button class="btn btn-sm btn-danger">Batal</button>
+                            </form>
+                            @else
+                            <span class="text-muted">-</span>
+                            @endif
+                        </td>
                     </tr>
                     @empty
                     <tr>
-                        <td colspan="8" class="text-center">Belum ada aktivitas transaksi.</td>
+                        <td colspan="9" class="text-center">Belum ada aktivitas transaksi.</td>
                     </tr>
                     @endforelse
                 </tbody>
@@ -62,6 +74,7 @@
 @push('js')
 <script>
 function getTransaksi() {
+    
     $.ajax({
         type: "GET",
         url: "/my-transaksi",
@@ -89,6 +102,21 @@ function getTransaksi() {
                         pembayaranBadge = '<span class="badge bg-secondary">Belum Dibayar</span>';
                     }
 
+                    let csrf = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+
+                    let aksi = '-';
+                    if (transaksi.status === 'Menunggu Konfirmasi') {
+                        aksi = `
+                            <form action="/transaksi/${transaksi.id}" method="POST" onsubmit="return confirm('Yakin ingin membatalkan transaksi ini?')">
+                                <input type="hidden" name="_token" value="${csrf}">
+                                <input type="hidden" name="_method" value="DELETE">
+                                <button class="btn btn-sm btn-danger">Batal</button>
+                            </form>
+                        `;
+                    }
+
+
+
                     rows += `
                         <tr>
                             <td>${transaksi.nomor_transaksi}</td>
@@ -99,13 +127,14 @@ function getTransaksi() {
                             <td>Rp ${parseInt(transaksi.total_harga).toLocaleString('id-ID')}</td>
                             <td>${statusBadge}</td>
                             <td>${pembayaranBadge}</td>
+                            <td>${aksi}</td>
                         </tr>
                     `;
                 });
             } else {
                 rows = `
                     <tr>
-                        <td colspan="8" class="text-center">Belum ada aktivitas transaksi.</td>
+                        <td colspan="9" class="text-center">Belum ada aktivitas transaksi.</td>
                     </tr>
                 `;
             }
