@@ -33,4 +33,13 @@ Aplikasi berbasis web untuk menjual sampah daur ulang oleh masyarakat kepada per
 2. Install dependencies:
    ```bash
    composer install
-   npm install && npm run dev
+   npm install
+   cp .env.example .env   # Linux/macOS
+   # atau
+   copy .env.example .env # Windows  
+   php artisan key:generate
+   php artisan migrate
+   php artisan db:seed --class=DatabaseSeeder
+   php artisan db:seed --class=RoleSeeder
+   php artisan storage:link
+   npm run serve-all
