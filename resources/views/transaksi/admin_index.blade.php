@@ -13,6 +13,8 @@
                         <th>No</th>
                         <th>Nomor Transaksi</th>
                         <th>Nama User</th>
+                        <th>Alamat Penjemputan</th>
+                        <th>Waktu Penjemputan</th>
                         <th>Jenis Sampah</th>
                         <th>Berat (kg)</th>
                         <th>Total Harga</th>
@@ -59,11 +61,15 @@
             ? '<span class="badge bg-primary">Sudah Dibayar</span>'
             : '<span class="badge bg-secondary">Belum Dibayar</span>';
 
+        let waktu = transaksi.waktu_penjemputan ?? '-';
+
         return `
             <tr data-id="${transaksi.id}">
                 <td class="text-center">${index + 1}</td>
                 <td>${transaksi.nomor_transaksi}</td>
                 <td>${transaksi.user.name}</td>
+                <td>${transaksi.alamat ?? '-'}</td>
+                <td>${waktu}</td>
                 <td>${transaksi.harga.jenis_sampah}</td>
                 <td class="text-center">${transaksi.berat}</td>
                 <td>Rp${Number(transaksi.total_harga).toLocaleString('id-ID')}</td>
@@ -114,7 +120,7 @@
                 if (response.length === 0) {
                     html = `
                         <tr>
-                            <td colspan="10" class="text-center text-muted">Belum ada aktivitas transaksi.</td>
+                            <td colspan="12" class="text-center text-muted">Belum ada aktivitas transaksi.</td>
                         </tr>
                     `;
                 } else {
@@ -138,7 +144,7 @@
 
     $(document).ready(function () {
         refreshTransaksiTable(); // initial load
-        setInterval(refreshTransaksiTable, 4000); 
+        setInterval(refreshTransaksiTable, 5000); 
     });
 </script>
 @endpush
