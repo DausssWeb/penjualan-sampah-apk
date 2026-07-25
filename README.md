@@ -2,7 +2,7 @@
 
 <img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="300" alt="Laravel Logo">
 
-# ♻️ Aplikasi Penjualan Sampah
+# Aplikasi Penjualan Sampah
 
 ![Laravel](https://img.shields.io/badge/Laravel_12-%23FF2D20.svg?style=for-the-badge&logo=laravel&logoColor=white)
 ![PHP](https://img.shields.io/badge/PHP_8.2+-%23777BB4.svg?style=for-the-badge&logo=php&logoColor=white)
